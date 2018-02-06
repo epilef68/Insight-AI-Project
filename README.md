@@ -1,5 +1,13 @@
 # Insight-AI-Project
 This project demonstrates the different speed accuracy tradeoffs for different stages of the OpenPose model on an indoor living room environment. OpenPose stages are used to achieve both local information in the form of joint heatmaps and global information in the form of limb vectors fields ie. part affinity fields (paf). These fields are concatenated at the end of each stage and input into the next stage, by removing stages less global information is used and greater weight is placed on local information. This means that for unobstructed joints and low number of people accuracy is not lost with decreasing number of stages.
+# Setup
+# Prerequisites
+* Python 3
+* Coco API
+* OpenCV
+* Keras
+* Tensorflow
+* Numpy
 
 # Model
 Several modifications are made to OpenPose including removing stages 1-6 as well as using the original VGG16 as the feature extractor and Inception.
