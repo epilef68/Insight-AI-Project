@@ -14,7 +14,7 @@ import cv2
 import numpy as np
 import util
 from scipy.ndimage.filters import gaussian_filter
-
+import argparse
 from keras.models import load_model
 
 def heatmap2pose(heatmap,paf):
@@ -176,10 +176,10 @@ def heatmap2pose(heatmap,paf):
             if -1 in index:
                 partList=partList+(0,0)
                 continue
-            Y = candidate[index.astype(int), 0]
-            X = candidate[index.astype(int), 1]
+            X = candidate[index.astype(int), 0]
+            Y = candidate[index.astype(int), 1]
     
-            partList=partList+(X[dInd[count]],Y[dInd[count]])
+            partList=partList+(int(X[dInd[count]]),int(Y[dInd[count]]))
             count=count+1
         full_list.append(partList)
     return full_list
@@ -187,6 +187,7 @@ def heatmap2pose(heatmap,paf):
 
 def OpenPoseModel(oriImg,model):
     m=1
+    
     # scale image
     param, model_params = config_reader()
 
@@ -218,19 +219,38 @@ def OpenPoseModel(oriImg,model):
     return full_list
 
 if __name__ == '__main__':
-    
-    test_image='sample_images/000000215259.jpg'
+    #run example python Pose.py --image sample_images/ski.jpg --output labeledImage.jpg --model model/OpenPose.h5
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--image', type=str, required=True, help='input image')
+    parser.add_argument('--output', type=str, required=True, help='output image')
+    parser.add_argument('--model', type=str, required=True, help='model')
 
+    args = parser.parse_args()
+    test_image = args.image
+    output = args.output
+    model_name = args.model
+    
+    # visualize
+    colors = [[255, 0, 0], [255, 85, 0], [255, 170, 0], [255, 255, 0], [170, 255, 0], [85, 255, 0],
+              [0, 255, 0], \
+              [0, 255, 85], [0, 255, 170], [0, 255, 255], [0, 170, 255], [0, 85, 255], [0, 0, 255],
+              [85, 0, 255], \
+              [170, 0, 255], [255, 0, 255], [255, 0, 170], [255, 0, 85]]
     oriImg = cv2.imread(test_image) # B,G,R order
     
-    model = load_model('model/OpenPose.h5')
+    model = load_model(model_name)
+ 
     full_list=OpenPoseModel(oriImg,model)
-#    return full_list
     
     
-    
-    
-    
-    
+    for i in range(0,len(full_list[1]),2):
+        for j in range(len(full_list)):
+            cv2.circle(oriImg, full_list[j][i:i+2], 4, colors[int(i/2)], thickness=-1)
 
+    cv2.imwrite(output, oriImg)
+    cv2.destroyAllWindows()
 
+    
+    
+    
+    
