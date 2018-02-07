@@ -16,6 +16,7 @@ Several modifications are made to OpenPose including removing stages 1-6 as well
 2017 Coco dataset is used for training, while testing is done on the consulting companies in home images (contact for testing data). 
 
 # Citations
+```
 @inproceedings{cao2017realtime,
   author = {Zhe Cao and Tomas Simon and Shih-En Wei and Yaser Sheikh},
   booktitle = {CVPR},
@@ -36,3 +37,4 @@ Several modifications are made to OpenPose including removing stages 1-6 as well
   title = {Convolutional pose machines},
   year = {2016}
 }
+```
