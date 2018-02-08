@@ -10,11 +10,14 @@ This project demonstrates the different speed accuracy tradeoffs for different s
 * Numpy
 
 # Model
-Several modifications are made to OpenPose including removing stages 1-6 as well as using the original VGG16 as the feature extractor and Inception.
+Several modifications are made to OpenPose including removing stages 1-6 as well as using the original VGG16 as the feature extractor and Inception. Models can be downloaded from, https://drive.google.com/drive/folders/1MKQA-zql-lugYXc8Yu26Q7LPMXCYNb-O?usp=sharing.
 
 # Datasets
 2017 Coco dataset is used for training, while testing is done on the consulting companies in home images (contact for testing data). 
 
+# Testing Model
+run python Pose.py --image sample_images/ski.jpg --output labeledImage.jpg --model OpenPose.h5
+to test run the model on an image.
 # Citations
 ```
 @inproceedings{cao2017realtime,
